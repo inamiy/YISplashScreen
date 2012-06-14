@@ -1,0 +1,347 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4821D53F158A3449004515CA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4821D53E158A3449004515CA /* Default@2x.png */; };
+		4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821D541158A3644004515CA /* YISplashScreenAnimation.m */; };
+		48924A1415898E760085703E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1315898E760085703E /* UIKit.framework */; };
+		48924A1615898E760085703E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1515898E760085703E /* Foundation.framework */; };
+		48924A1815898E760085703E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1715898E760085703E /* CoreGraphics.framework */; };
+		48924A1E15898E760085703E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48924A1C15898E760085703E /* InfoPlist.strings */; };
+		48924A2015898E760085703E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A1F15898E760085703E /* main.m */; };
+		48924A2415898E760085703E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A2315898E760085703E /* AppDelegate.m */; };
+		48924A2715898E760085703E /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48924A2515898E760085703E /* MainStoryboard_iPhone.storyboard */; };
+		48924A2A15898E760085703E /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48924A2815898E760085703E /* MainStoryboard_iPad.storyboard */; };
+		48924A2D15898E760085703E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A2C15898E760085703E /* FirstViewController.m */; };
+		48924A2F15898E760085703E /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A2E15898E760085703E /* first.png */; };
+		48924A3115898E760085703E /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A3015898E760085703E /* first@2x.png */; };
+		48924A3415898E760085703E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A3315898E760085703E /* SecondViewController.m */; };
+		48924A3615898E760085703E /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A3515898E760085703E /* second.png */; };
+		48924A3815898E760085703E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A3715898E760085703E /* second@2x.png */; };
+		48924A461589A8C90085703E /* YISplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A451589A8C90085703E /* YISplashScreen.m */; };
+		48924A661589D53F0085703E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A651589D53F0085703E /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4821D53E158A3449004515CA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		4821D540158A3644004515CA /* YISplashScreenAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YISplashScreenAnimation.h; sourceTree = "<group>"; };
+		4821D541158A3644004515CA /* YISplashScreenAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YISplashScreenAnimation.m; sourceTree = "<group>"; };
+		48924A0F15898E760085703E /* YISplashScreenDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YISplashScreenDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		48924A1315898E760085703E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		48924A1515898E760085703E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		48924A1715898E760085703E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		48924A1B15898E760085703E /* YISplashScreenDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YISplashScreenDemo-Info.plist"; sourceTree = "<group>"; };
+		48924A1D15898E760085703E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		48924A1F15898E760085703E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		48924A2115898E760085703E /* YISplashScreenDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YISplashScreenDemo-Prefix.pch"; sourceTree = "<group>"; };
+		48924A2215898E760085703E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		48924A2315898E760085703E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		48924A2615898E760085703E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		48924A2915898E760085703E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		48924A2B15898E760085703E /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		48924A2C15898E760085703E /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		48924A2E15898E760085703E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		48924A3015898E760085703E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		48924A3215898E760085703E /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		48924A3315898E760085703E /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		48924A3515898E760085703E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		48924A3715898E760085703E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		48924A441589A8C90085703E /* YISplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YISplashScreen.h; sourceTree = "<group>"; };
+		48924A451589A8C90085703E /* YISplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YISplashScreen.m; sourceTree = "<group>"; };
+		48924A651589D53F0085703E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		48924A0C15898E760085703E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48924A661589D53F0085703E /* QuartzCore.framework in Frameworks */,
+				48924A1415898E760085703E /* UIKit.framework in Frameworks */,
+				48924A1615898E760085703E /* Foundation.framework in Frameworks */,
+				48924A1815898E760085703E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		48924A0415898E760085703E = {
+			isa = PBXGroup;
+			children = (
+				48924A3E15898E9C0085703E /* YISplashScreen */,
+				48924A1915898E760085703E /* YISplashScreenDemo */,
+				48924A1215898E760085703E /* Frameworks */,
+				48924A1015898E760085703E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		48924A1015898E760085703E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48924A0F15898E760085703E /* YISplashScreenDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48924A1215898E760085703E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				48924A1315898E760085703E /* UIKit.framework */,
+				48924A1515898E760085703E /* Foundation.framework */,
+				48924A1715898E760085703E /* CoreGraphics.framework */,
+				48924A651589D53F0085703E /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		48924A1915898E760085703E /* YISplashScreenDemo */ = {
+			isa = PBXGroup;
+			children = (
+				48924A2215898E760085703E /* AppDelegate.h */,
+				48924A2315898E760085703E /* AppDelegate.m */,
+				48924A2515898E760085703E /* MainStoryboard_iPhone.storyboard */,
+				48924A2815898E760085703E /* MainStoryboard_iPad.storyboard */,
+				48924A2B15898E760085703E /* FirstViewController.h */,
+				48924A2C15898E760085703E /* FirstViewController.m */,
+				48924A2E15898E760085703E /* first.png */,
+				48924A3015898E760085703E /* first@2x.png */,
+				48924A3215898E760085703E /* SecondViewController.h */,
+				48924A3315898E760085703E /* SecondViewController.m */,
+				48924A3515898E760085703E /* second.png */,
+				48924A3715898E760085703E /* second@2x.png */,
+				4821D53E158A3449004515CA /* Default@2x.png */,
+				48924A1A15898E760085703E /* Supporting Files */,
+			);
+			path = YISplashScreenDemo;
+			sourceTree = "<group>";
+		};
+		48924A1A15898E760085703E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				48924A1B15898E760085703E /* YISplashScreenDemo-Info.plist */,
+				48924A1C15898E760085703E /* InfoPlist.strings */,
+				48924A1F15898E760085703E /* main.m */,
+				48924A2115898E760085703E /* YISplashScreenDemo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		48924A3E15898E9C0085703E /* YISplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+				48924A441589A8C90085703E /* YISplashScreen.h */,
+				48924A451589A8C90085703E /* YISplashScreen.m */,
+				4821D540158A3644004515CA /* YISplashScreenAnimation.h */,
+				4821D541158A3644004515CA /* YISplashScreenAnimation.m */,
+			);
+			path = YISplashScreen;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		48924A0E15898E760085703E /* YISplashScreenDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48924A3B15898E760085703E /* Build configuration list for PBXNativeTarget "YISplashScreenDemo" */;
+			buildPhases = (
+				48924A0B15898E760085703E /* Sources */,
+				48924A0C15898E760085703E /* Frameworks */,
+				48924A0D15898E760085703E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YISplashScreenDemo;
+			productName = YISplashScreenDemo;
+			productReference = 48924A0F15898E760085703E /* YISplashScreenDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		48924A0615898E760085703E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Yasuhiro Inami";
+			};
+			buildConfigurationList = 48924A0915898E760085703E /* Build configuration list for PBXProject "YISplashScreenDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 48924A0415898E760085703E;
+			productRefGroup = 48924A1015898E760085703E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				48924A0E15898E760085703E /* YISplashScreenDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		48924A0D15898E760085703E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48924A1E15898E760085703E /* InfoPlist.strings in Resources */,
+				48924A2715898E760085703E /* MainStoryboard_iPhone.storyboard in Resources */,
+				48924A2A15898E760085703E /* MainStoryboard_iPad.storyboard in Resources */,
+				48924A2F15898E760085703E /* first.png in Resources */,
+				48924A3115898E760085703E /* first@2x.png in Resources */,
+				48924A3615898E760085703E /* second.png in Resources */,
+				48924A3815898E760085703E /* second@2x.png in Resources */,
+				4821D53F158A3449004515CA /* Default@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		48924A0B15898E760085703E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48924A2015898E760085703E /* main.m in Sources */,
+				48924A2415898E760085703E /* AppDelegate.m in Sources */,
+				48924A2D15898E760085703E /* FirstViewController.m in Sources */,
+				48924A3415898E760085703E /* SecondViewController.m in Sources */,
+				48924A461589A8C90085703E /* YISplashScreen.m in Sources */,
+				4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		48924A1C15898E760085703E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48924A1D15898E760085703E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		48924A2515898E760085703E /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48924A2615898E760085703E /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		48924A2815898E760085703E /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48924A2915898E760085703E /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		48924A3915898E760085703E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		48924A3A15898E760085703E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		48924A3C15898E760085703E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YISplashScreenDemo/YISplashScreenDemo-Prefix.pch";
+				INFOPLIST_FILE = "YISplashScreenDemo/YISplashScreenDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		48924A3D15898E760085703E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "YISplashScreenDemo/YISplashScreenDemo-Prefix.pch";
+				INFOPLIST_FILE = "YISplashScreenDemo/YISplashScreenDemo-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		48924A0915898E760085703E /* Build configuration list for PBXProject "YISplashScreenDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48924A3915898E760085703E /* Debug */,
+				48924A3A15898E760085703E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48924A3B15898E760085703E /* Build configuration list for PBXNativeTarget "YISplashScreenDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48924A3C15898E760085703E /* Debug */,
+				48924A3D15898E760085703E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 48924A0615898E760085703E /* Project object */;
+}
