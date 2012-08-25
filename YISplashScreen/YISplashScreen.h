@@ -14,9 +14,9 @@
 
 + (void)hide;
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer))animations;
++ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations;
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer))animations
++ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
                 completion:(void (^)(void))completion;
 
 @end

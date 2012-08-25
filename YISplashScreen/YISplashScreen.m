@@ -46,17 +46,22 @@ static CALayer* __splashLayer = nil;
     [self hideWithAnimations:NULL completion:NULL];
 }
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer))animations
++ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
 {
     [self hideWithAnimations:animations completion:NULL];
 }
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer))animations
++ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
                 completion:(void (^)(void))completion
 {
     // restore rootViewController here
     UIWindow* window = [UIApplication sharedApplication].delegate.window;
     window.rootViewController = __originalRootViewController;
+    
+    // temporally activate window to add window.rootViewController.view before animation starts,
+    // so that __splashWindow can be referred via __splashLayer.superlayer
+    [window makeKeyAndVisible];
+    [__splashWindow makeKeyAndVisible];
     
     //
     // NOTE: 
@@ -71,6 +76,7 @@ static CALayer* __splashLayer = nil;
         [window makeKeyAndVisible];
         
         // clean up
+        [__splashLayer removeFromSuperlayer];
         __splashLayer = nil;
         __splashWindow = nil;
         __originalRootViewController = nil;
@@ -80,9 +86,8 @@ static CALayer* __splashLayer = nil;
         }
     }];
     
-    
     if (animations) {
-        animations(__splashLayer);
+        animations(__splashLayer, window.rootViewController.view.layer);
     }
     else {
         // default: fade out 

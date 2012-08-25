@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
-{
-    UIAlertView* _confirmAlert;
-    UIAlertView* _completeAlert;
-}
 
 @property (strong, nonatomic) UIWindow *window;
 

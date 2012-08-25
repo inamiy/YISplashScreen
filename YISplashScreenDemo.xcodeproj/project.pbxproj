@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8C60F815E8CE41008D1D22 /* YISplashScreen+Migration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */; };
 		4821D53F158A3449004515CA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4821D53E158A3449004515CA /* Default@2x.png */; };
 		4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821D541158A3644004515CA /* YISplashScreenAnimation.m */; };
 		48924A1415898E760085703E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1315898E760085703E /* UIKit.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F8C60F615E8CE41008D1D22 /* YISplashScreen+Migration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YISplashScreen+Migration.h"; sourceTree = "<group>"; };
+		1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YISplashScreen+Migration.m"; sourceTree = "<group>"; };
 		4821D53E158A3449004515CA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4821D540158A3644004515CA /* YISplashScreenAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YISplashScreenAnimation.h; sourceTree = "<group>"; };
 		4821D541158A3644004515CA /* YISplashScreenAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YISplashScreenAnimation.m; sourceTree = "<group>"; };
@@ -137,6 +140,8 @@
 			children = (
 				48924A441589A8C90085703E /* YISplashScreen.h */,
 				48924A451589A8C90085703E /* YISplashScreen.m */,
+				1F8C60F615E8CE41008D1D22 /* YISplashScreen+Migration.h */,
+				1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */,
 				4821D540158A3644004515CA /* YISplashScreenAnimation.h */,
 				4821D541158A3644004515CA /* YISplashScreenAnimation.m */,
 			);
@@ -218,6 +223,7 @@
 				48924A3415898E760085703E /* SecondViewController.m in Sources */,
 				48924A461589A8C90085703E /* YISplashScreen.m in Sources */,
 				4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */,
+				1F8C60F815E8CE41008D1D22 /* YISplashScreen+Migration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

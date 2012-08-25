@@ -11,5 +11,6 @@
 @interface YISplashScreenAnimation : NSObject
 
 + (id)pageCurlAnimation;
++ (id)cubeAnimation;
 
 @end

@@ -8,82 +8,15 @@
 
 #import "AppDelegate.h"
 #import "YISplashScreen.h"
+#import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
 
-#define SHOWS_MIGRATION_ALERT   0   // 0 or 1
-#define ANIMATION_TYPE          2   // 0-2
+#define SHOWS_MIGRATION_ALERT   1   // 0 or 1
+#define ANIMATION_TYPE          3   // 0-3
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-
-- (void)startApp
-{
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    
-#if ANIMATION_TYPE == 0
-    
-    // simple fade out
-    [YISplashScreen hide];
-    
-#elif ANIMATION_TYPE == 1
-    
-    // manual
-    [YISplashScreen hideWithAnimations:^(CALayer* splashLayer) {
-        [CATransaction begin];
-        [CATransaction setAnimationDuration:0.7];
-         [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [CATransaction setCompletionBlock:^{
-            
-        }];
-        
-        splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
-        
-        [CATransaction commit];
-    }];
-
-#else
-    
-    // page curl
-    [YISplashScreen hideWithAnimations:[YISplashScreenAnimation pageCurlAnimation]];
-    
-#endif
-    
-}
-
-#pragma mark -
-
-#pragma mark UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView == _confirmAlert) {
-        
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Migrating..." message:@"Please wait..." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-        [alert show];
-        
-        //
-        // NOTE: add CoreData migration logic here
-        //
-        
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            
-            [alert dismissWithClickedButtonIndex:0 animated:YES];
-            
-            _completeAlert = [[UIAlertView alloc] initWithTitle:@"Migration Complete" message:@"Test is complete." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [_completeAlert show];
-        });
-        
-    }
-    else if (alertView == _completeAlert) {
-        
-        // call after migration finished
-        [self startApp];
-        
-    }
-}
 
 #pragma mark -
 
@@ -95,17 +28,54 @@
     [YISplashScreen show];
     
 #if SHOWS_MIGRATION_ALERT
-    
-    // show migration confirm alert
-    _confirmAlert = [[UIAlertView alloc] initWithTitle:@"Migration Start" message:@"This is test." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [_confirmAlert show];
-    
+    void (^migrationBlock)(void) = ^{
+        
+        //
+        // NOTE: add CoreData migration logic here
+        //
+        sleep(1);
+        
+    };
 #else
-    
-    // start app immediately
-    [self startApp];
-    
+    void (^migrationBlock)(void) = nil;
 #endif
+    
+    [YISplashScreen waitForMigration:migrationBlock completion:^{
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        
+#if ANIMATION_TYPE == 0
+        
+        // simple fade out
+        [YISplashScreen hide];
+        
+#elif ANIMATION_TYPE == 1
+        
+        // manual
+        [YISplashScreen hideWithAnimations:^(CALayer* splashLayer, CALayer* rootLayer) {
+            
+            [CATransaction begin];
+            [CATransaction setAnimationDuration:0.7];
+            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+            
+            splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
+            
+            [CATransaction commit];
+        }];
+        
+#elif ANIMATION_TYPE == 2
+        
+        // page curl
+        [YISplashScreen hideWithAnimations:[YISplashScreenAnimation pageCurlAnimation]];
+        
+#else
+        
+        // cube
+        [YISplashScreen hideWithAnimations:[YISplashScreenAnimation cubeAnimation]];
+        
+#endif
+        
+    }];
     
     return YES;
 }

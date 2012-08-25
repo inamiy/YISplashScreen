@@ -8,28 +8,30 @@
 
 #import "YISplashScreenAnimation.h"
 
+static CATransform3D CATransform3DMakePerspective(CGFloat z)
+{
+    CATransform3D t = CATransform3DIdentity;
+    t.m34 = - 1.0 / z;
+    return t;
+}
+
 @implementation YISplashScreenAnimation
-
-
-#pragma mark -
-
-#pragma mark Hiding Animations
 
 + (id)pageCurlAnimation
 {
-    void(^animationBlock)(CALayer*) = ^(CALayer* splashLayer) {
+    void(^animationBlock)(CALayer*, CALayer*) = ^(CALayer* splashLayer, CALayer* rootLayer) {
 		
         // adjust anchorPoint
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
+        
         splashLayer.anchorPoint = CGPointMake(-0.0, 0.5);
         splashLayer.position = CGPointMake(splashLayer.bounds.size.width*splashLayer.anchorPoint.x, splashLayer.bounds.size.height*splashLayer.anchorPoint.y);
+        
         [CATransaction commit];
         
         // page-curl effect
-        CATransform3D transform = CATransform3DIdentity;
-        float zDistanse = 800.0;
-        transform.m34 = 1.0 / -zDistanse;
+        CATransform3D transform = CATransform3DMakePerspective(800.0);
         
         CATransform3D transform1 = CATransform3DRotate(transform, -M_PI_2/10, 0, 1, 0);
         CATransform3D transform2 = CATransform3DRotate(transform, -M_PI_2, 0, 1, 0);
@@ -52,9 +54,68 @@
                                              nil];
         keyframeAnimation.removedOnCompletion = NO;
         keyframeAnimation.fillMode = kCAFillModeForwards;
-        [splashLayer addAnimation:keyframeAnimation forKey:nil];
+        [splashLayer addAnimation:keyframeAnimation forKey:@"pageCurlAnimation"];
         
 	};
+    
+    return [animationBlock copy];
+}
+
++ (id)cubeAnimation
+{
+    void(^animationBlock)(CALayer*, CALayer*) = ^(CALayer* splashLayer, CALayer* rootLayer) {
+        
+        CATransform3D perspective = CATransform3DMakePerspective(800.0);
+        
+        CALayer* windowLayer = rootLayer.superlayer;
+        CGFloat halfWidth = rootLayer.frame.size.width/2;
+        
+        // move splash & root layers to transformLayer
+        CATransformLayer* transformLayer = [CATransformLayer layer];
+        transformLayer.frame = rootLayer.bounds;
+        [splashLayer removeFromSuperlayer];
+        [rootLayer removeFromSuperlayer];
+        [transformLayer addSublayer:splashLayer];
+        [transformLayer addSublayer:rootLayer];
+        [windowLayer addSublayer:transformLayer];
+        
+        // transform rootLayer to right-hand-side
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+
+        CATransform3D transform = CATransform3DIdentity;
+        transform = CATransform3DTranslate(transform, 0, 0, -halfWidth);
+        transform = CATransform3DRotate(transform, M_PI_2, 0, 1, 0);
+        transform = CATransform3DTranslate(transform, 0, 0, halfWidth);
+        
+        rootLayer.transform = transform;
+
+        [CATransaction commit];
+        
+        // transformLayer rotation
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            rootLayer.transform = CATransform3DIdentity;
+            [windowLayer addSublayer:rootLayer];
+            [transformLayer removeFromSuperlayer];
+        }];
+
+        CABasicAnimation *transformAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
+        transformAnimation.duration = 0.75;
+        
+        transform = perspective;
+        transformAnimation.fromValue = [NSValue valueWithCATransform3D:transform];
+        
+        transform = CATransform3DTranslate(transform, 0, 0, -halfWidth);
+        transform = CATransform3DRotate(transform, -M_PI_2, 0, 1, 0);
+        transform = CATransform3DTranslate(transform, 0, 0, halfWidth);
+        transformAnimation.toValue = [NSValue valueWithCATransform3D:transform];
+        
+        [transformLayer addAnimation:transformAnimation forKey:@"cubeAnimation"];
+        transformLayer.transform = transform;
+        
+        [CATransaction commit];
+    };
     
     return [animationBlock copy];
 }
