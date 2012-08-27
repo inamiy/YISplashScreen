@@ -35,4 +35,9 @@
     }
 }
 
+- (IBAction)handleExitButton:(id)sender
+{
+    exit(0);
+}
+
 @end

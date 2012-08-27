@@ -10,4 +10,6 @@
 
 @interface FirstViewController : UIViewController
 
+- (IBAction)handleExitButton:(id)sender;
+
 @end
