@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* rootLayer);
+
+
 @interface YISplashScreen : NSObject <UIAlertViewDelegate>
 
 + (void)show;
 
 + (void)hide;
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations;
++ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations;
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
++ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
                 completion:(void (^)(void))completion;
 
 @end

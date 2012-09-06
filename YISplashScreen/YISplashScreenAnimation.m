@@ -8,18 +8,19 @@
 
 #import "YISplashScreenAnimation.h"
 
-static CATransform3D CATransform3DMakePerspective(CGFloat z)
+static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
 {
     CATransform3D t = CATransform3DIdentity;
     t.m34 = - 1.0 / z;
     return t;
 }
 
+
 @implementation YISplashScreenAnimation
 
-+ (id)pageCurlAnimation
++ (YISplashScreenAnimationBlock)pageCurlAnimation
 {
-    void(^animationBlock)(CALayer*, CALayer*) = ^(CALayer* splashLayer, CALayer* rootLayer) {
+    YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
 		
         // adjust anchorPoint
         [CATransaction begin];
@@ -61,9 +62,9 @@ static CATransform3D CATransform3DMakePerspective(CGFloat z)
     return [animationBlock copy];
 }
 
-+ (id)cubeAnimation
++ (YISplashScreenAnimationBlock)cubeAnimation
 {
-    void(^animationBlock)(CALayer*, CALayer*) = ^(CALayer* splashLayer, CALayer* rootLayer) {
+    YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
         
         CATransform3D perspective = CATransform3DMakePerspective(800.0);
         

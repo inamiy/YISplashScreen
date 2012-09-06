@@ -12,6 +12,7 @@ static UIViewController* __originalRootViewController = nil;
 static UIWindow* __splashWindow = nil;
 static CALayer* __splashLayer = nil;
 
+
 @implementation YISplashScreen
 
 + (void)show
@@ -46,12 +47,12 @@ static CALayer* __splashLayer = nil;
     [self hideWithAnimations:NULL completion:NULL];
 }
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
++ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
 {
     [self hideWithAnimations:animations completion:NULL];
 }
 
-+ (void)hideWithAnimations:(void (^)(CALayer* splashLayer, CALayer* rootLayer))animations
++ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
                 completion:(void (^)(void))completion
 {
     // restore rootViewController here

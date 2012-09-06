@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YISplashScreen.h"
+
 
 @interface YISplashScreenAnimation : NSObject
 
-+ (id)pageCurlAnimation;
-+ (id)cubeAnimation;
++ (YISplashScreenAnimationBlock)pageCurlAnimation;
++ (YISplashScreenAnimationBlock)cubeAnimation;
 
 @end
