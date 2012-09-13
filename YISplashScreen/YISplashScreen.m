@@ -8,6 +8,8 @@
 
 #import "YISplashScreen.h"
 
+#define YI_IS_4_INCH    ([UIScreen mainScreen].bounds.size.height == 568.0)
+
 static UIViewController* __originalRootViewController = nil;
 static UIWindow* __splashWindow = nil;
 static CALayer* __splashLayer = nil;
@@ -32,7 +34,12 @@ static CALayer* __splashLayer = nil;
     // splash layer (portrait)
     // TODO: show/hide landscape splash image
     CALayer* splashLayer = [CALayer layer];
-    splashLayer.contents = (id)[UIImage imageNamed:@"Default.png"].CGImage;
+    if (YI_IS_4_INCH) {
+        splashLayer.contents = (id)[UIImage imageNamed:@"Default-568h.png"].CGImage;
+    }
+    else {
+        splashLayer.contents = (id)[UIImage imageNamed:@"Default.png"].CGImage;
+    }
     splashLayer.frame = [UIScreen mainScreen].applicationFrame;
     [splashWindow.layer addSublayer:splashLayer];
     
