@@ -59,12 +59,20 @@ static void (^__migrationCompletionBlock)(void) = nil;
             __migrationCompletionBlock();
         }
         
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView == __completeAlert) {
+        
         // clean up
         __migrationBlock = nil;
         __migrationCompletionBlock = nil;
         __migrationDelegate = nil;
         __confirmAlert = nil;
         __completeAlert = nil;
+        
     }
 }
 
