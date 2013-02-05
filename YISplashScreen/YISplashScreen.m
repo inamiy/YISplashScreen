@@ -41,6 +41,36 @@ static CALayer* __splashLayer = nil;
         splashLayer.contents = (id)[UIImage imageNamed:@"Default.png"].CGImage;
     }
     splashLayer.frame = [UIScreen mainScreen].applicationFrame;
+
+	if ([UIApplication sharedApplication].statusBarHidden == NO) {
+	    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+
+	    splashLayer.frame = CGRectMake(0, 0, splashLayer.frame.size.width, splashLayer.frame.size.height + statusBarHeight);
+
+	    CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+	    mask.frame = splashLayer.bounds;
+	    mask.fillColor = [[UIColor blackColor] CGColor];
+
+	    CGFloat x = 0;
+	    CGFloat y = statusBarHeight;
+	    CGFloat width = splashLayer.frame.size.width;
+	    CGFloat height = splashLayer.frame.size.height - statusBarHeight;
+
+	    CGMutablePathRef path = CGPathCreateMutable();
+
+	    CGPathMoveToPoint(path, NULL, x, y);
+	    CGPathAddLineToPoint(path, nil, x + width, y);
+	    CGPathAddLineToPoint(path, nil, x + width, y + height);
+	    CGPathAddLineToPoint(path, nil, x, y + height);
+	    CGPathAddLineToPoint(path, nil, x, y);
+	    CGPathCloseSubpath(path);
+
+	    mask.path = path;
+	    CGPathRelease(path);
+
+	    splashLayer.mask = mask;
+	}
+
     [splashWindow.layer addSublayer:splashLayer];
     
     __splashWindow = splashWindow;
