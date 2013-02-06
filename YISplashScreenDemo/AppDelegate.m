@@ -29,12 +29,7 @@
     
 #if SHOWS_MIGRATION_ALERT
     void (^migrationBlock)(void) = ^{
-        
-        //
-        // NOTE: add CoreData migration logic here
-        //
-        sleep(1);
-        
+        sleep(1);   // NOTE: add CoreData migration logic here
     };
 #else
     void (^migrationBlock)(void) = nil;
@@ -71,6 +66,7 @@
 #else
         
         // cube
+        // FIXME: cubeAnimation doesn't work when not migrating
         [YISplashScreen hideWithAnimations:[YISplashScreenAnimation cubeAnimation]];
         
 #endif

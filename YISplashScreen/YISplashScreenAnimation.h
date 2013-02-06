@@ -13,6 +13,8 @@
 @interface YISplashScreenAnimation : NSObject
 
 + (YISplashScreenAnimationBlock)pageCurlAnimation;
+
+// FIXME: cubeAnimation doesn't work when not migrating
 + (YISplashScreenAnimationBlock)cubeAnimation;
 
 @end
