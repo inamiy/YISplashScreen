@@ -7,7 +7,6 @@
 //
 
 #import "YISplashScreenAnimation.h"
-#import <QuartzCore/QuartzCore.h>
 
 static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
 {

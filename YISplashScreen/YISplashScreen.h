@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* rootLayer);
 
