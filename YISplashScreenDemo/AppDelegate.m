@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+
+#import <QuartzCore/QuartzCore.h>
 #import "YISplashScreen.h"
 #import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
