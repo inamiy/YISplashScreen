@@ -7,6 +7,7 @@
 //
 
 #import "YISplashScreen.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define YI_IS_4_INCH    ([UIScreen mainScreen].bounds.size.height == 568.0)
 
