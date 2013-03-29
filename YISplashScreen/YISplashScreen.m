@@ -93,15 +93,19 @@ static CALayer* __splashLayer = nil;
 + (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
                 completion:(void (^)(void))completion
 {
-    // wait a little
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
-    
     // restore rootViewController here
     UIWindow* window = [UIApplication sharedApplication].delegate.window;
     window.rootViewController = __originalRootViewController;
     
     // activate window to add window.rootViewController.view before animation starts
     [window makeKeyAndVisible];
+    
+    //
+    // NOTE: 
+    // [CATransaction flush] (or running run loop once) is required 
+    // for inside-animations-block to perform implicit/explicit transactions.
+    //
+    [CATransaction flush];
     
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
