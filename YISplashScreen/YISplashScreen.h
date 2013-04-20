@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
-
-typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* rootLayer);
+#import "YISplashScreenAnimation.h"
 
 
 @interface YISplashScreen : NSObject <UIAlertViewDelegate>
@@ -18,9 +17,14 @@ typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* root
 
 + (void)hide;
 
-+ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations;
++ (void)hideWithAnimationBlock:(YISplashScreenAnimationBlock)animationBlock;
 
-+ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
-                completion:(void (^)(void))completion;
++ (void)hideWithAnimationBlock:(YISplashScreenAnimationBlock)animationBlock
+                    completion:(void (^)(void))completion;
+
++ (void)hideWithAnimation:(YISplashScreenAnimation*)animation;
+
++ (void)hideWithAnimation:(YISplashScreenAnimation*)animation
+               completion:(void (^)(void))completion;
 
 @end

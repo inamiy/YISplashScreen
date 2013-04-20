@@ -85,14 +85,22 @@ static void (^__migrationCompletionBlock)(void) = nil;
 {
     if (migration) {
         
-        __migrationBlock = migration;
-        __migrationCompletionBlock = completion;
+        // use dispatch_after to prevent console warning (in iOS5)
+        // "Applications are expected to have a root view controller at the end of application launch"
+        double delayInSeconds = 0.01;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        __migrationDelegate = [[YISplashScreenMigrationDelegate alloc] init];
-        
-        // show migration confirm alert
-        __confirmAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migration Start", nil) message:NSLocalizedString(@"Migration Start Message", nil) delegate:__migrationDelegate cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-        [__confirmAlert show];
+            __migrationBlock = migration;
+            __migrationCompletionBlock = completion;
+            
+            __migrationDelegate = [[YISplashScreenMigrationDelegate alloc] init];
+            
+            // show migration confirm alert
+            __confirmAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migration Start", nil) message:NSLocalizedString(@"Migration Start Message", nil) delegate:__migrationDelegate cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            [__confirmAlert show];
+            
+        });
         
     }
     else {

@@ -7,14 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YISplashScreen.h"
+#import <QuartzCore/QuartzCore.h>
+
+typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* rootLayer);
 
 
 @interface YISplashScreenAnimation : NSObject
 
-+ (YISplashScreenAnimationBlock)pageCurlAnimation;
+@property (nonatomic, copy) YISplashScreenAnimationBlock animationBlock;
 
-// FIXME: cubeAnimation doesn't work when not migrating
-+ (YISplashScreenAnimationBlock)cubeAnimation;
+//
+// Tells YISplashScreen to move splashLayer from splashWindow (above status-bar)
+// to mainWindow (below status-bar) before animation starts.
+// Set to YES whenever animationBlock handles splashLayer as such,
+// or layer-flickering may occur inside the block.
+// See 'cubeAnimation' for more detail. Default is NO.
+//
+@property (nonatomic) BOOL shouldMoveSplashLayerToMainWindowBeforeAnimation;
+
++ (instancetype)animationWithBlock:(YISplashScreenAnimationBlock)animationBlock;
+
+// presets
++ (instancetype)fadeOutAnimation;
++ (instancetype)pageCurlAnimation;
++ (instancetype)cubeAnimation;
 
 @end

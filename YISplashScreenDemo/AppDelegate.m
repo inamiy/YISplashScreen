@@ -48,7 +48,7 @@
 #elif ANIMATION_TYPE == 1
         
         // manual
-        [YISplashScreen hideWithAnimations:^(CALayer* splashLayer, CALayer* rootLayer) {
+        [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
             
             [CATransaction begin];
             [CATransaction setAnimationDuration:0.7];
@@ -62,12 +62,12 @@
 #elif ANIMATION_TYPE == 2
         
         // page curl
-        [YISplashScreen hideWithAnimations:[YISplashScreenAnimation pageCurlAnimation]];
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation pageCurlAnimation]];
         
 #else
         
         // cube
-        [YISplashScreen hideWithAnimations:[YISplashScreenAnimation cubeAnimation]];
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation cubeAnimation]];
         
 #endif
         

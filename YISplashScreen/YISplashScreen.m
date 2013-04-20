@@ -35,7 +35,7 @@ static CALayer* __splashLayer = nil;
     UIWindow* splashWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     splashWindow.windowLevel = UIWindowLevelStatusBar+1; 
     splashWindow.backgroundColor = [UIColor clearColor];
-    splashWindow.rootViewController = [[UIViewController alloc] init];  // dummy
+    splashWindow.rootViewController = [[UIViewController alloc] init];  // dummy (required in iOS6)
     
     // splash layer (portrait)
     // TODO: show/hide landscape splash image
@@ -87,67 +87,85 @@ static CALayer* __splashLayer = nil;
 
 + (void)hide
 {
-    [self hideWithAnimations:NULL completion:NULL];
+    [self hideWithAnimation:[YISplashScreenAnimation fadeOutAnimation] completion:NULL];
 }
 
-+ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
++ (void)hideWithAnimation:(YISplashScreenAnimation*)animation
 {
-    [self hideWithAnimations:animations completion:NULL];
+    [self hideWithAnimation:animation completion:NULL];
 }
 
-+ (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
-                completion:(void (^)(void))completion
++ (void)hideWithAnimation:(YISplashScreenAnimation*)animation completion:(void (^)(void))completion
 {
-    // use dispatch_after to prevent console warning
-    // "Applications are expected to have a root view controller at the end of application launch"
-    double delayInSeconds = 0.1;
+    BOOL shouldMove = animation.shouldMoveSplashLayerToMainWindowBeforeAnimation;
+    
+    [self _restoreRootViewControllerMovingSplashLayerToMainWindow:shouldMove];
+    
+    // perform hiding animation after rootViewController is ready
+    // (mainly to wait for status-bar change & splashLayer moving)
+    double delayInSeconds = 0.01;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self _performAnimationBlock:animation.animationBlock completion:completion];
+    });
+}
+
++ (void)hideWithAnimationBlock:(YISplashScreenAnimationBlock)animationBlock
+{
+    [self hideWithAnimationBlock:animationBlock completion:NULL];
+}
+
++ (void)hideWithAnimationBlock:(YISplashScreenAnimationBlock)animationBlock
+                    completion:(void (^)(void))completion
+{
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    [self hideWithAnimation:animation completion:completion];
+}
+
+#pragma mark -
+
+#pragma mark Private
+
++ (void)_restoreRootViewControllerMovingSplashLayerToMainWindow:(BOOL)moving
+{
+    UIWindow* window = [UIApplication sharedApplication].delegate.window;
+    
+    if (window.rootViewController != __originalRootViewController) {
         
-        // restore rootViewController here
-        UIWindow* window = [UIApplication sharedApplication].delegate.window;
         window.rootViewController = __originalRootViewController;
         
-        // activate window to add window.rootViewController.view before animation starts
         [window makeKeyAndVisible];
         
-        //
-        // NOTE:
-        // [CATransaction flush] (or running run loop once) is required
-        // for animations-block to perform implicit/explicit transactions inside.
-        // (e.g. status-bar animation)
-        //
-        [CATransaction flush];
-        
-        [CATransaction begin];
-        [CATransaction setCompletionBlock:^{
-            
-            // clean up
-            [__splashLayer removeFromSuperlayer];
-            __splashLayer = nil;
-            __splashWindow = nil;
-            __originalRootViewController = nil;
-            
-            if (completion) {
-                completion();
-            }
-        }];
-        
-        if (animations) {
-            animations(__splashLayer, window.rootViewController.view.layer);
+        if (moving) {
+            [window.layer addSublayer:__splashLayer];
         }
-        else {
-            // default: fade out
-            [CATransaction begin];
-            [CATransaction setAnimationDuration:0.5];
-            __splashLayer.opacity = 0;          
-            [CATransaction commit];
-        }
-        
-        [CATransaction commit];
-        
-    });
+    }
+}
+
++ (void)_performAnimationBlock:(YISplashScreenAnimationBlock)animationBlock completion:(void (^)(void))completion
+{
+    UIWindow* window = [UIApplication sharedApplication].delegate.window;
     
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        
+        // clean up
+        [__splashLayer removeFromSuperlayer];
+        __splashLayer = nil;
+        __splashWindow = nil;
+        __originalRootViewController = nil;
+        
+        if (completion) {
+            completion();
+        }
+    }];
+    
+    if (animationBlock) {
+        animationBlock(__splashLayer, window.rootViewController.view.layer);
+    }
+    
+    [CATransaction commit];
 }
 
 @end

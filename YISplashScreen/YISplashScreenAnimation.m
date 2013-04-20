@@ -18,7 +18,33 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
 
 @implementation YISplashScreenAnimation
 
-+ (YISplashScreenAnimationBlock)pageCurlAnimation
++ (instancetype)animationWithBlock:(YISplashScreenAnimationBlock)animationBlock
+{
+    YISplashScreenAnimation* animation = [[YISplashScreenAnimation alloc] init];
+    animation.animationBlock = animationBlock;
+    
+    return animation;
+}
+
+#pragma mark -
+
+#pragma mark Presets
+
++ (instancetype)fadeOutAnimation
+{
+    YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
+        [CATransaction begin];
+        [CATransaction setAnimationDuration:0.5];
+        splashLayer.opacity = 0;
+        [CATransaction commit];
+    };
+    
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    return animation;
+}
+
++ (instancetype)pageCurlAnimation
 {
     YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
 		
@@ -59,10 +85,12 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
         
 	};
     
-    return [animationBlock copy];
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    return animation;
 }
 
-+ (YISplashScreenAnimationBlock)cubeAnimation
++ (instancetype)cubeAnimation
 {
     YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
         
@@ -71,16 +99,14 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
         CALayer* windowLayer = rootLayer.superlayer;
         CGFloat halfWidth = rootLayer.frame.size.width/2;
         
-        // move splash & root layers to transformLayer
+        // create transformLayer & move splash + root layers to transformLayer
         CATransformLayer* transformLayer = [CATransformLayer layer];
         transformLayer.frame = rootLayer.bounds;
-        [splashLayer removeFromSuperlayer];
-        [rootLayer removeFromSuperlayer];
-        [transformLayer addSublayer:splashLayer];
         [transformLayer addSublayer:rootLayer];
+        [transformLayer addSublayer:splashLayer];
         [windowLayer addSublayer:transformLayer];
         
-        // transform rootLayer to right-hand-side
+        // set rootLayer to right-hand-side
         [CATransaction begin];
         [CATransaction setDisableActions:YES];
 
@@ -118,7 +144,13 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
         [CATransaction commit];
     };
     
-    return [animationBlock copy];
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    // since above animationBlock brings splashLayer to mainWindow for 3D-transform,
+    // it is important to set shouldMove=YES to prevent from layer-flickering.
+    animation.shouldMoveSplashLayerToMainWindowBeforeAnimation = YES;
+    
+    return animation;
 }
 
 @end
