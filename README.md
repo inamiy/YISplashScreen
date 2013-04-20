@@ -5,6 +5,13 @@ Easy splash screen + animation maker for iOS5+.
 
 <img src="https://raw.github.com/inamiy/YISplashScreen/master/Screenshots/screenshot1.png" alt="ScreenShot1" width="225px" style="width:225px;" />
 
+Install via [CocoaPods](http://cocoapods.org/)
+----------
+
+```
+pod 'YISplashScreen'
+```
+
 How to use
 ----------
 
