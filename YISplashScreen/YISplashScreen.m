@@ -21,15 +21,21 @@ static CALayer* __splashLayer = nil;
 {
     UIWindow* window = [UIApplication sharedApplication].delegate.window;
     
+    //
     // temporally disable rootViewController 
     // to avoid calling any CoreData logic while showing splash image
+    //
+    // (add dummy rootViewController to prevent console warning
+    // "Applications are expected to have a root view controller at the end of application launch")
+    //
     __originalRootViewController = window.rootViewController;
-    window.rootViewController = nil;
+    window.rootViewController = [[UIViewController alloc] init];    // dummy
     
     // splash window
     UIWindow* splashWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     splashWindow.windowLevel = UIWindowLevelStatusBar+1; 
-    splashWindow.backgroundColor = [UIColor clearColor]; 
+    splashWindow.backgroundColor = [UIColor clearColor];
+    splashWindow.rootViewController = [[UIViewController alloc] init];  // dummy
     
     // splash layer (portrait)
     // TODO: show/hide landscape splash image
@@ -92,46 +98,56 @@ static CALayer* __splashLayer = nil;
 + (void)hideWithAnimations:(YISplashScreenAnimationBlock)animations
                 completion:(void (^)(void))completion
 {
-    // restore rootViewController here
-    UIWindow* window = [UIApplication sharedApplication].delegate.window;
-    window.rootViewController = __originalRootViewController;
-    
-    // activate window to add window.rootViewController.view before animation starts
-    [window makeKeyAndVisible];
-    
-    //
-    // NOTE: 
-    // [CATransaction flush] (or running run loop once) is required 
-    // for inside-animations-block to perform implicit/explicit transactions.
-    //
-    [CATransaction flush];
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
+    // use dispatch_after to prevent console warning
+    // "Applications are expected to have a root view controller at the end of application launch"
+    double delayInSeconds = 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         
-        // clean up
-        [__splashLayer removeFromSuperlayer];
-        __splashLayer = nil;
-        __splashWindow = nil;
-        __originalRootViewController = nil;
+        // restore rootViewController here
+        UIWindow* window = [UIApplication sharedApplication].delegate.window;
+        window.rootViewController = __originalRootViewController;
         
-        if (completion) {
-            completion();
-        }
-    }];
-    
-    if (animations) {
-        animations(__splashLayer, window.rootViewController.view.layer);
-    }
-    else {
-        // default: fade out 
+        // activate window to add window.rootViewController.view before animation starts
+        [window makeKeyAndVisible];
+        
+        //
+        // NOTE:
+        // [CATransaction flush] (or running run loop once) is required
+        // for animations-block to perform implicit/explicit transactions inside.
+        // (e.g. status-bar animation)
+        //
+        [CATransaction flush];
+        
         [CATransaction begin];
-        [CATransaction setAnimationDuration:0.5];
-        __splashLayer.opacity = 0;          
+        [CATransaction setCompletionBlock:^{
+            
+            // clean up
+            [__splashLayer removeFromSuperlayer];
+            __splashLayer = nil;
+            __splashWindow = nil;
+            __originalRootViewController = nil;
+            
+            if (completion) {
+                completion();
+            }
+        }];
+        
+        if (animations) {
+            animations(__splashLayer, window.rootViewController.view.layer);
+        }
+        else {
+            // default: fade out
+            [CATransaction begin];
+            [CATransaction setAnimationDuration:0.5];
+            __splashLayer.opacity = 0;          
+            [CATransaction commit];
+        }
+        
         [CATransaction commit];
-    }
+        
+    });
     
-    [CATransaction commit];
 }
 
 @end
