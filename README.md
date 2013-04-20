@@ -1,7 +1,9 @@
-YISplashScreen
-==============
+YISplashScreen 1.0.0
+====================
 
-Easy splash screen + animation maker for iOS.
+Easy splash screen + animation maker for iOS5+.
+
+<img src="https://raw.github.com/inamiy/YISplashScreen/master/Screenshots/screenshot1.png" alt="ScreenShot1" width="225px" style="width:225px;" />
 
 How to use
 ----------
@@ -26,10 +28,10 @@ Hiding Animations
 [YISplashScreen hide];
 
 // cube
-[YISplashScreen hideWithAnimations:[YISplashScreenAnimation cubeAnimation]];
+[YISplashScreen hideWithAnimation:[YISplashScreenAnimation cubeAnimation]];
 
 // manually add animation
-[YISplashScreen hideWithAnimations:^(CALayer* splashLayer, CALayer* rootLayer) {
+[YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
     
     // splashLayer moves up
     [CATransaction begin];
@@ -73,4 +75,6 @@ By using `[YISplashScreen waitForMigration:completion:]` (optional), you can eas
 
 License
 -------
-YISplashScreen is available under the Beerware license.
+`YISplashScreen` is available under the [Beerware](http://en.wikipedia.org/wiki/Beerware) license.
+
+If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
