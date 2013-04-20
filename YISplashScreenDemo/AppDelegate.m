@@ -12,7 +12,7 @@
 #import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
 
-#define SHOWS_MIGRATION_ALERT   1   // 0 or 1
+#define SHOWS_MIGRATION_ALERT   0   // 0 or 1
 #define ANIMATION_TYPE          3   // 0-3
 
 @implementation AppDelegate
@@ -67,7 +67,7 @@
 #else
         
         // cube
-        // FIXME: cubeAnimation doesn't work when not migrating
+        // FIXME: cubeAnimation doesn't work in iOS6 when not migrating
         [YISplashScreen hideWithAnimations:[YISplashScreenAnimation cubeAnimation]];
         
 #endif
