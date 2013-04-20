@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F8C60F815E8CE41008D1D22 /* YISplashScreen+Migration.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */; };
-		4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4821D541158A3644004515CA /* YISplashScreenAnimation.m */; };
 		488C5DFD1601AEA40013EBFC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 488C5DFB1601AEA40013EBFC /* Default@2x.png */; };
 		488C5E001601AFEE0013EBFC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 488C5DFF1601AFEE0013EBFC /* Default-568h@2x.png */; };
 		48924A1415898E760085703E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1315898E760085703E /* UIKit.framework */; };
@@ -25,15 +23,11 @@
 		48924A3415898E760085703E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A3315898E760085703E /* SecondViewController.m */; };
 		48924A3615898E760085703E /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A3515898E760085703E /* second.png */; };
 		48924A3815898E760085703E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48924A3715898E760085703E /* second@2x.png */; };
-		48924A461589A8C90085703E /* YISplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 48924A451589A8C90085703E /* YISplashScreen.m */; };
 		48924A661589D53F0085703E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A651589D53F0085703E /* QuartzCore.framework */; };
+		A29AD7BA38024E5EB56B8253 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54306ED2A0C44E1A8F8AFA9B /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F8C60F615E8CE41008D1D22 /* YISplashScreen+Migration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YISplashScreen+Migration.h"; sourceTree = "<group>"; };
-		1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "YISplashScreen+Migration.m"; sourceTree = "<group>"; };
-		4821D540158A3644004515CA /* YISplashScreenAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YISplashScreenAnimation.h; sourceTree = "<group>"; };
-		4821D541158A3644004515CA /* YISplashScreenAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YISplashScreenAnimation.m; sourceTree = "<group>"; };
 		488C5DFB1601AEA40013EBFC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		488C5DFF1601AFEE0013EBFC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		48924A0F15898E760085703E /* YISplashScreenDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YISplashScreenDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,9 +50,9 @@
 		48924A3315898E760085703E /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		48924A3515898E760085703E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		48924A3715898E760085703E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		48924A441589A8C90085703E /* YISplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YISplashScreen.h; sourceTree = "<group>"; };
-		48924A451589A8C90085703E /* YISplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YISplashScreen.m; sourceTree = "<group>"; };
 		48924A651589D53F0085703E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		54306ED2A0C44E1A8F8AFA9B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE80D0AB499E46F182ED0A03 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +64,7 @@
 				48924A1415898E760085703E /* UIKit.framework in Frameworks */,
 				48924A1615898E760085703E /* Foundation.framework in Frameworks */,
 				48924A1815898E760085703E /* CoreGraphics.framework in Frameworks */,
+				A29AD7BA38024E5EB56B8253 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,10 +74,10 @@
 		48924A0415898E760085703E = {
 			isa = PBXGroup;
 			children = (
-				48924A3E15898E9C0085703E /* YISplashScreen */,
 				48924A1915898E760085703E /* YISplashScreenDemo */,
 				48924A1215898E760085703E /* Frameworks */,
 				48924A1015898E760085703E /* Products */,
+				BE80D0AB499E46F182ED0A03 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +96,7 @@
 				48924A1515898E760085703E /* Foundation.framework */,
 				48924A1715898E760085703E /* CoreGraphics.framework */,
 				48924A651589D53F0085703E /* QuartzCore.framework */,
+				54306ED2A0C44E1A8F8AFA9B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,19 +134,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		48924A3E15898E9C0085703E /* YISplashScreen */ = {
-			isa = PBXGroup;
-			children = (
-				48924A441589A8C90085703E /* YISplashScreen.h */,
-				48924A451589A8C90085703E /* YISplashScreen.m */,
-				1F8C60F615E8CE41008D1D22 /* YISplashScreen+Migration.h */,
-				1F8C60F715E8CE41008D1D22 /* YISplashScreen+Migration.m */,
-				4821D540158A3644004515CA /* YISplashScreenAnimation.h */,
-				4821D541158A3644004515CA /* YISplashScreenAnimation.m */,
-			);
-			path = YISplashScreen;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -158,9 +141,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48924A3B15898E760085703E /* Build configuration list for PBXNativeTarget "YISplashScreenDemo" */;
 			buildPhases = (
+				68A22376B05749DBA4106929 /* Check Pods Manifest.lock */,
 				48924A0B15898E760085703E /* Sources */,
 				48924A0C15898E760085703E /* Frameworks */,
 				48924A0D15898E760085703E /* Resources */,
+				72CA0DB76A1F42C89FE7CE53 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -216,6 +201,37 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		68A22376B05749DBA4106929 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
+		};
+		72CA0DB76A1F42C89FE7CE53 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		48924A0B15898E760085703E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -225,9 +241,6 @@
 				48924A2415898E760085703E /* AppDelegate.m in Sources */,
 				48924A2D15898E760085703E /* FirstViewController.m in Sources */,
 				48924A3415898E760085703E /* SecondViewController.m in Sources */,
-				48924A461589A8C90085703E /* YISplashScreen.m in Sources */,
-				4821D542158A3644004515CA /* YISplashScreenAnimation.m in Sources */,
-				1F8C60F815E8CE41008D1D22 /* YISplashScreen+Migration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +323,7 @@
 		};
 		48924A3C15898E760085703E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE80D0AB499E46F182ED0A03 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YISplashScreenDemo/YISplashScreenDemo-Prefix.pch";
@@ -322,6 +336,7 @@
 		};
 		48924A3D15898E760085703E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE80D0AB499E46F182ED0A03 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YISplashScreenDemo/YISplashScreenDemo-Prefix.pch";
