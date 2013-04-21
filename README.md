@@ -5,6 +5,17 @@ Easy splash screen + animation maker for iOS5+.
 
 <img src="https://raw.github.com/inamiy/YISplashScreen/master/Screenshots/screenshot1.png" alt="ScreenShot1" width="225px" style="width:225px;" />
 
+- `YISplashScreen` creates another UIWindow on top of status-bar so that transition will be nicer, compared to adding splash image directly on `rootViewController.view`.
+- `animationBlock` is used to hide splash image with two arguments:
+  - `splashLayer`: splash image layer (superlayer = another window, by default)
+  - `rootLayer`: equivalent to `rootViewController.view.layer` (superlayer = main window)
+
+Normally, animating `splashLayer` and `rootLayer` individually on separate UIWindows is sufficient, 
+but if you want to put them in one main window during animation, 
+prepare it by setting `shouldMoveSplashLayerToMainWindowBeforeAnimation = YES` 
+so that `splashLayer.superlayer` will be main window (below status-bar) instead,
+and more importantly, it prevents from layer-flickering.
+
 Install via [CocoaPods](http://cocoapods.org/)
 ----------
 
