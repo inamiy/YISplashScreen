@@ -153,4 +153,65 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
     return animation;
 }
 
++ (instancetype)circleOpeningAnimation
+{
+    return [self _circleWipeAnimationWithOpening:YES];
+}
+
++ (instancetype)circleClosingAnimation
+{
+    return [self _circleWipeAnimationWithOpening:NO];
+}
+
++ (instancetype)_circleWipeAnimationWithOpening:(BOOL)opening
+{
+    YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
+		
+        CGFloat w = splashLayer.bounds.size.width/2;
+        CGFloat h = splashLayer.bounds.size.height/2;
+        CGFloat d = sqrt(w*w+h*h);  // distance from corner to center
+        
+        CGRect largeRect = CGRectMake(w-d, h-d, 2*d, 2*d);
+        CGRect zeroRect = CGRectMake(splashLayer.bounds.size.width/2, splashLayer.bounds.size.height/2, 0, 0);
+        
+        UIBezierPath* fromPath;
+        UIBezierPath* toPath;
+        
+        if (opening) {
+            UIBezierPath* fromPath1 = [UIBezierPath bezierPathWithOvalInRect:zeroRect];
+            UIBezierPath* toPath1 = [UIBezierPath bezierPathWithOvalInRect:largeRect];
+            
+            fromPath = [UIBezierPath bezierPathWithOvalInRect:largeRect];
+            [fromPath appendPath:fromPath1];
+            
+            toPath = [UIBezierPath bezierPathWithOvalInRect:largeRect];
+            [toPath appendPath:toPath1];
+        }
+        else {
+            fromPath = [UIBezierPath bezierPathWithOvalInRect:largeRect];
+            toPath = [UIBezierPath bezierPathWithOvalInRect:zeroRect];
+        }
+        
+        CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+        mask.frame = splashLayer.bounds;
+        mask.fillColor = [[UIColor blackColor] CGColor];
+        mask.fillRule = kCAFillRuleEvenOdd;
+        splashLayer.mask = mask;
+        
+        CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"path"];
+        animation.duration = 0.75;
+        animation.repeatCount = 1;
+        animation.removedOnCompletion = NO;
+        animation.fillMode = kCAFillModeForwards;
+        animation.fromValue = (__bridge id)fromPath.CGPath;
+        animation.toValue = (__bridge id)toPath.CGPath;
+        [mask addAnimation:animation forKey:@"circleWipeAnimation"];
+        
+	};
+    
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    return animation;
+}
+
 @end

@@ -31,5 +31,7 @@ typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* root
 + (instancetype)fadeOutAnimation;
 + (instancetype)pageCurlAnimation;
 + (instancetype)cubeAnimation;
++ (instancetype)circleOpeningAnimation;
++ (instancetype)circleClosingAnimation;
 
 @end

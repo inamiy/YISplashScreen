@@ -12,8 +12,8 @@
 #import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
 
-#define SHOWS_MIGRATION_ALERT   1   // 0 or 1
-#define ANIMATION_TYPE          3   // 0-3
+#define SHOWS_MIGRATION_ALERT   1
+#define USES_PRESET_ANIMATION   1
 
 @implementation AppDelegate
 
@@ -40,13 +40,31 @@
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         
-#if ANIMATION_TYPE == 0
+#if USES_PRESET_ANIMATION == 1
         
-        // simple fade out
-        [YISplashScreen hide];
+        //--------------------------------------------------
+        // fade out
+        //--------------------------------------------------
+//        [YISplashScreen hide];    // fadeOutAnimation
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation fadeOutAnimation]]
         
-#elif ANIMATION_TYPE == 1
+        //--------------------------------------------------
+        // page curl
+        //--------------------------------------------------
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation pageCurlAnimation]];
         
+        //--------------------------------------------------
+        // cube
+        //--------------------------------------------------
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation cubeAnimation]];
+        
+        //--------------------------------------------------
+        // circle wipe
+        //--------------------------------------------------
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleOpeningAnimation]];
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleClosingAnimation]];
+        
+#else
         // manual
         [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
             
@@ -58,17 +76,6 @@
             
             [CATransaction commit];
         }];
-        
-#elif ANIMATION_TYPE == 2
-        
-        // page curl
-        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation pageCurlAnimation]];
-        
-#else
-        
-        // cube
-        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation cubeAnimation]];
-        
 #endif
         
     }];
