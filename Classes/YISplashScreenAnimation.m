@@ -214,4 +214,78 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
     return animation;
 }
 
++ (instancetype)_blurredCircleOpeningAnimation
+{
+    return [self _blurredCircleWipeAnimationWithOpening:YES];
+}
+
++ (instancetype)_blurredCircleClosingAnimation
+{
+    return [self _blurredCircleWipeAnimationWithOpening:NO];
+}
+
++ (instancetype)_blurredCircleWipeAnimationWithOpening:(BOOL)opening
+{
+    YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
+		
+        CGFloat max, min;
+        if (splashLayer.bounds.size.width > splashLayer.bounds.size.height) {
+            max = splashLayer.bounds.size.width;
+            min = splashLayer.bounds.size.height;
+        }
+        else {
+            min = splashLayer.bounds.size.width;
+            max = splashLayer.bounds.size.height;
+        }
+        
+        CGFloat maxEndPoint = 0.5*(1+sqrt(2));
+        
+        CAGradientLayer *mask = [CAGradientLayer layer];
+        mask.anchorPoint = CGPointZero;
+        mask.startPoint = CGPointMake(0.5, 0.5);
+        mask.endPoint = CGPointMake(maxEndPoint, maxEndPoint);
+        
+        // WARNING: kCAGradientLayerRadial (private API) 
+        mask.type = @"radial";
+        
+        // set large radial mask to fit whole splashLayer & translate startPoint to center
+        mask.bounds = CGRectMake(0, 0, max, max);
+        mask.transform = CATransform3DMakeTranslation((min-max)/2, 0, 0);
+        
+        splashLayer.mask = mask;
+        
+        UIColor *maskColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        UIColor *noMaskColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+        
+        NSArray* zeroLocations = @[@0.0, @0.0, @0.0];
+        NSArray* enlargedLocations = @[@0.0, @0.9, @1.0];
+        
+        NSArray* toValue;
+        
+        if (opening) {
+            mask.colors = @[(id)maskColor.CGColor, (id)maskColor.CGColor, (id)noMaskColor.CGColor];
+            mask.locations = zeroLocations;
+            toValue = enlargedLocations;
+        }
+        else {
+            mask.colors = @[(id)noMaskColor.CGColor, (id)noMaskColor.CGColor, (id)maskColor.CGColor];
+            mask.locations = enlargedLocations;
+            toValue = zeroLocations;
+        }
+        
+        CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"locations"];
+        animation.duration = 0.75;
+        animation.repeatCount = 1;
+        animation.removedOnCompletion = NO;
+        animation.fillMode = kCAFillModeForwards;
+        animation.toValue = toValue;
+        [mask addAnimation:animation forKey:@"_blurredCircleWipeAnimation"];
+        
+	};
+    
+    YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
+    
+    return animation;
+}
+
 @end

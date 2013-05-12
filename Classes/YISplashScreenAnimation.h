@@ -34,4 +34,8 @@ typedef void (^YISplashScreenAnimationBlock)(CALayer* splashLayer, CALayer* root
 + (instancetype)circleOpeningAnimation;
 + (instancetype)circleClosingAnimation;
 
+// WARNING: uses private APIs
++ (instancetype)_blurredCircleOpeningAnimation;
++ (instancetype)_blurredCircleClosingAnimation;
+
 @end

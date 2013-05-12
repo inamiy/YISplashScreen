@@ -12,7 +12,7 @@
 #import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
 
-#define SHOWS_MIGRATION_ALERT   1
+#define SHOWS_MIGRATION_ALERT   0
 #define USES_PRESET_ANIMATION   1
 
 @implementation AppDelegate
@@ -63,6 +63,10 @@
         //--------------------------------------------------
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleOpeningAnimation]];
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleClosingAnimation]];
+        
+        // WARNING: blurred-circle-wipe uses kCAGradientLayerRadial (private API)
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleOpeningAnimation]];
+//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleClosingAnimation]];
         
 #else
         // manual
