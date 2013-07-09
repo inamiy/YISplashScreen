@@ -65,10 +65,10 @@ Hiding Animations
 
 CoreData Migration
 ------------------
-By using `[YISplashScreen waitForMigration:completion:]` (optional), you can easily integrate simple UIAlertView-confirmation UI.
+By using `[YISplashScreen showAndWaitForMigration:completion:]` (optional), you can easily integrate simple UIAlertView-confirmation UI.
 
 ```
-[YISplashScreen waitForMigration:^{
+[YISplashScreen showAndWaitForMigration:^{
     
     //
     // NOTE: add CoreData migration logic here
