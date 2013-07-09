@@ -8,7 +8,8 @@
 
 #import "YISplashScreen.h"
 
-#define YI_IS_4_INCH    ([UIScreen mainScreen].bounds.size.height == 568.0)
+#define YI_IS_4_INCH            ([UIScreen mainScreen].bounds.size.height == 568.0)
+#define YI_IS_IOS_AT_LEAST(ver) ([[[UIDevice currentDevice] systemVersion] compare:ver] != NSOrderedAscending)
 
 static UIViewController* __originalRootViewController = nil;
 static UIWindow* __splashWindow = nil;
@@ -57,38 +58,57 @@ static CALayer* __splashLayer = nil;
 	    mask.frame = splashLayer.bounds;
 	    mask.fillColor = [[UIColor blackColor] CGColor];
         
-            CGFloat radius = 2.5f;
 	    CGFloat x = 0;
 	    CGFloat y = statusBarHeight;
 	    CGFloat width = splashLayer.frame.size.width;
 	    CGFloat height = splashLayer.frame.size.height - statusBarHeight;
         
-            CGRect innerRect = CGRectInset(CGRectMake(0, statusBarHeight, width, height), radius, radius);
+        CGMutablePathRef path = CGPathCreateMutable();
         
+        BOOL isIOS6 = YI_IS_IOS_AT_LEAST(@"6.0") && !YI_IS_IOS_AT_LEAST(@"7.0");
+        
+        // trim status-bar + iOS6 rounded corner
+        if (isIOS6) {
+            
+            CGFloat radius = 2.5f;
+            
+            CGRect innerRect = CGRectInset(CGRectMake(0, statusBarHeight, width, height), radius, radius);
+            
             CGFloat inside_right = innerRect.origin.x + innerRect.size.width;
             CGFloat outside_right = x + width;
             CGFloat inside_bottom = innerRect.origin.y + innerRect.size.height;
             CGFloat outside_bottom = y + height;
-        
+            
             CGFloat inside_top = innerRect.origin.y;
             CGFloat outside_top = y;
             CGFloat outside_left = x;
-        
-	    CGMutablePathRef path = CGPathCreateMutable();
-
+            
             CGPathMoveToPoint(path, NULL, innerRect.origin.x, outside_top);
-        
+            
             CGPathAddLineToPoint(path, NULL, inside_right, outside_top);
             CGPathAddArcToPoint(path, NULL, outside_right, outside_top, outside_right, inside_top, radius);
             CGPathAddLineToPoint(path, NULL, outside_right, inside_bottom);
             CGPathAddArcToPoint(path, NULL,  outside_right, outside_bottom, inside_right, outside_bottom, radius);
-        
+            
             CGPathAddLineToPoint(path, NULL, innerRect.origin.x, outside_bottom);
             CGPathAddArcToPoint(path, NULL,  outside_left, outside_bottom, outside_left, inside_bottom, radius);
             CGPathAddLineToPoint(path, NULL, outside_left, inside_top);
             CGPathAddArcToPoint(path, NULL,  outside_left, outside_top, innerRect.origin.x, outside_top, radius);
-
+            
             CGPathCloseSubpath(path);
+            
+        }
+        // trim status-bar only
+        else {
+            
+            CGPathMoveToPoint(path, NULL, x, y);
+            CGPathAddLineToPoint(path, nil, x + width, y);
+            CGPathAddLineToPoint(path, nil, x + width, y + height);
+            CGPathAddLineToPoint(path, nil, x, y + height);
+            CGPathAddLineToPoint(path, nil, x, y);
+            CGPathCloseSubpath(path);
+            
+        }
         
 	    mask.path = path;
 	    CGPathRelease(path);
