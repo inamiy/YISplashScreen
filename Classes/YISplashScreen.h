@@ -11,7 +11,7 @@
 #import "YISplashScreenAnimation.h"
 
 
-@interface YISplashScreen : NSObject <UIAlertViewDelegate>
+@interface YISplashScreen : NSObject
 
 + (void)show;
 
@@ -27,5 +27,18 @@
 
 + (void)hideWithAnimationBlock:(YISplashScreenAnimationBlock)animationBlock
                     completion:(void (^)(void))completion;
+
+@end
+
+
+@interface YISplashScreen (RootDetaching)
+
+//
+// If you want CoreData migration, call this before '[YISplashScreen show]'
+// so that any CoreData logic inside rootViewController will not be called until splash image is hidden.
+//
+// See also: YISplashScreen+Migration (simple UIAlertView helper)
+//
++ (void)detachRootViewController;
 
 @end

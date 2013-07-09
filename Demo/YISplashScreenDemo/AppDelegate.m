@@ -12,8 +12,7 @@
 #import "YISplashScreen+Migration.h" // optional
 #import "YISplashScreenAnimation.h"
 
-#define SHOWS_MIGRATION_ALERT   0
-#define USES_PRESET_ANIMATION   1
+#define SHOWS_MIGRATION_ALERT   1
 
 @implementation AppDelegate
 
@@ -25,22 +24,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // show splash
-    [YISplashScreen show];
     
 #if SHOWS_MIGRATION_ALERT
-    void (^migrationBlock)(void) = ^{
-        sleep(1);   // NOTE: add CoreData migration logic here
-    };
-#else
-    void (^migrationBlock)(void) = nil;
-#endif
     
-    [YISplashScreen waitForMigration:migrationBlock completion:^{
+    [YISplashScreen showAndWaitForMigration:^{
+        
+        sleep(1);   // NOTE: add CoreData migration logic here
+        
+    } completion:^{
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-        
-#if USES_PRESET_ANIMATION == 1
         
         //--------------------------------------------------
         // fade out
@@ -68,21 +61,28 @@
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleOpeningAnimation]];
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleClosingAnimation]];
         
-#else
+        //--------------------------------------------------
         // manual
-        [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
-            
-            [CATransaction begin];
-            [CATransaction setAnimationDuration:0.7];
-            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-            
-            splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
-            
-            [CATransaction commit];
-        }];
-#endif
+        //--------------------------------------------------
+//        [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
+//            
+//            [CATransaction begin];
+//            [CATransaction setAnimationDuration:0.7];
+//            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+//            
+//            splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
+//            
+//            [CATransaction commit];
+//        }];
         
     }];
+    
+#else
+    
+    [YISplashScreen show];
+    [YISplashScreen hide];
+    
+#endif
     
     return YES;
 }

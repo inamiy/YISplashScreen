@@ -8,9 +8,9 @@
 
 #import "YISplashScreen.h"
 
-@interface YISplashScreen (Migration)
+@interface YISplashScreen (Migration) <UIAlertViewDelegate>
 
 // simple UIAlertView-confirmation on migration
-+ (void)waitForMigration:(void (^)(void))migration completion:(void (^)(void))completion;
++ (void)showAndWaitForMigration:(void (^)(void))migration completion:(void (^)(void))completion;
 
 @end

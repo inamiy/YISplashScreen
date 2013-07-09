@@ -20,18 +20,6 @@ static CALayer* __splashLayer = nil;
 
 + (void)show
 {
-    UIWindow* window = [UIApplication sharedApplication].delegate.window;
-    
-    //
-    // temporally disable rootViewController 
-    // to avoid calling any CoreData logic while showing splash image
-    //
-    // (add dummy rootViewController to prevent console warning
-    // "Applications are expected to have a root view controller at the end of application launch")
-    //
-    __originalRootViewController = window.rootViewController;
-    window.rootViewController = [[UIViewController alloc] init];    // dummy
-    
     // splash window
     UIWindow* splashWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     splashWindow.windowLevel = UIWindowLevelStatusBar+1; 
@@ -170,16 +158,19 @@ static CALayer* __splashLayer = nil;
 {
     UIWindow* window = [UIApplication sharedApplication].delegate.window;
     
-    if (window.rootViewController != __originalRootViewController) {
-        
-        window.rootViewController = __originalRootViewController;
-        
-        [window makeKeyAndVisible];
-        
-        if (moving) {
-            [window.layer addSublayer:__splashLayer];
-        }
+    // detach if needed, to adjust __originalRootViewController.view.frame to applicationFrame
+    // (NOTE: directly setting 'window.rootViewController.view.frame = [UIScreen mainScreen].applicationFrame' doesn't work)
+    [self detachRootViewController];
+    
+    // attach original again
+    window.rootViewController = __originalRootViewController;
+    
+    [window makeKeyAndVisible];
+    
+    if (moving) {
+        [window.layer addSublayer:__splashLayer];
     }
+    
 }
 
 + (void)_performAnimationBlock:(YISplashScreenAnimationBlock)animationBlock completion:(void (^)(void))completion
@@ -205,6 +196,28 @@ static CALayer* __splashLayer = nil;
     }
     
     [CATransaction commit];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation YISplashScreen (RootDetaching)
+
++ (void)detachRootViewController
+{
+    if (!__originalRootViewController) {
+        
+        UIWindow* window = [UIApplication sharedApplication].delegate.window;
+        __originalRootViewController = window.rootViewController;
+        
+        // add dummy rootViewController to prevent console warning
+        // "Applications are expected to have a root view controller at the end of application launch".
+        window.rootViewController = [[UIViewController alloc] init];
+        
+    }
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import "YISplashScreen+Migration.h"
 
+#define YI_IS_IOS_AT_LEAST(ver) ([[[UIDevice currentDevice] systemVersion] compare:ver] != NSOrderedAscending)
+
 static UIAlertView* __confirmAlert = nil;
 static UIAlertView* __completeAlert = nil;
 static id __migrationDelegate = nil;
@@ -79,18 +81,20 @@ static void (^__migrationCompletionBlock)(void) = nil;
 @end
 
 
-@implementation YISplashScreen (Migration)
+#pragma mark -
 
-+ (void)waitForMigration:(void (^)(void))migration completion:(void (^)(void))completion
+
+@implementation YISplashScreen (Migration) 
+
++ (void)showAndWaitForMigration:(void (^)(void))migration completion:(void (^)(void))completion
 {
     if (migration) {
         
-        // use dispatch_after to prevent console warning (in iOS5)
-        // "Applications are expected to have a root view controller at the end of application launch"
-        double delayInSeconds = 0.01;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self detachRootViewController];
+        [self show];
         
+        void (^startMigrationBlock)(void) = ^{
+            
             __migrationBlock = migration;
             __migrationCompletionBlock = completion;
             
@@ -100,13 +104,28 @@ static void (^__migrationCompletionBlock)(void) = nil;
             __confirmAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migration Start", nil) message:NSLocalizedString(@"Migration Start Message", nil) delegate:__migrationDelegate cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
             [__confirmAlert show];
             
-        });
+        };
+        
+        // use dispatch_after to prevent console warning (in iOS5)
+        // "Applications are expected to have a root view controller at the end of application launch"
+        if (YI_IS_IOS_AT_LEAST(@"5.0") && !YI_IS_IOS_AT_LEAST(@"6.0")) {
+            double delayInSeconds = 0.01;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), startMigrationBlock);
+        }
+        else {
+            startMigrationBlock();
+        }
         
     }
     else {
+        
+        [self show];
+        
         if (completion) {
             completion();
         }
+        
     }
 }
 
