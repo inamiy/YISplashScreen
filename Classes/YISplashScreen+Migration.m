@@ -26,30 +26,31 @@ static void (^__migrationCompletionBlock)(void) = nil;
 {
     if (alertView == __confirmAlert) {
         
-        // migrating-alert
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migrating...", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+        UIAlertView* migrationAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migrating...", nil) message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
         
-        //UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125, 80, 30, 30)];
         UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(125, 50, 30, 30)];
-		indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-		[alert addSubview:indicator];
-		[indicator startAnimating];
+        indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        [migrationAlert addSubview:indicator];
+        [indicator startAnimating];
+        [migrationAlert show];
         
-        [alert show];
-        
-        // wait until alert animation finished
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.7]];
-        
-        // perform migration
-        if (__migrationBlock) {
-            __migrationBlock();
-        }
-        
-        // close migrating-alert
-        [alert dismissWithClickedButtonIndex:0 animated:YES];
-        
-        __completeAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migration Complete", nil) message:NSLocalizedString(@"Migration Complete Message", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-        [__completeAlert show];
+        // perform migration after delay
+        double delayInSeconds = 0.5;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            if (__migrationBlock) {
+                __migrationBlock();
+            }
+            
+            // close migrationAlert
+            [migrationAlert dismissWithClickedButtonIndex:0 animated:YES];
+            
+            __completeAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Migration Complete", nil) message:NSLocalizedString(@"Migration Complete Message", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+            
+            [__completeAlert show];
+            
+        });
         
     }
     else if (alertView == __completeAlert) {
