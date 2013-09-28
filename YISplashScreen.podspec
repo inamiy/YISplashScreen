@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'YISplashScreen'
-  s.version  = '1.0.0'
+  s.version  = '1.1.0'
   s.license  = { :type => 'Beerware', :text => 'If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.' }
   s.homepage = 'https://github.com/inamiy/YISplashScreen'
   s.author   = { 'Yasuhiro Inami' => 'inamiy@gmail.com' }
