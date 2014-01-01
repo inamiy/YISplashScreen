@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0C498F1874546200CB527E /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0C498D1874546200CB527E /* Default-Landscape@2x.png */; };
+		1F0C49901874546200CB527E /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F0C498E1874546200CB527E /* Default-Portrait@2x.png */; };
 		488C5DFD1601AEA40013EBFC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 488C5DFB1601AEA40013EBFC /* Default@2x.png */; };
 		488C5E001601AFEE0013EBFC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 488C5DFF1601AFEE0013EBFC /* Default-568h@2x.png */; };
 		48924A1415898E760085703E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48924A1315898E760085703E /* UIKit.framework */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0C498D1874546200CB527E /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
+		1F0C498E1874546200CB527E /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
 		488C5DFB1601AEA40013EBFC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		488C5DFF1601AFEE0013EBFC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		48924A0F15898E760085703E /* YISplashScreenDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YISplashScreenDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +134,8 @@
 				48924A2115898E760085703E /* YISplashScreenDemo-Prefix.pch */,
 				488C5DFB1601AEA40013EBFC /* Default@2x.png */,
 				488C5DFF1601AFEE0013EBFC /* Default-568h@2x.png */,
+				1F0C498D1874546200CB527E /* Default-Landscape@2x.png */,
+				1F0C498E1874546200CB527E /* Default-Portrait@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -190,11 +196,13 @@
 				48924A1E15898E760085703E /* InfoPlist.strings in Resources */,
 				48924A2715898E760085703E /* MainStoryboard_iPhone.storyboard in Resources */,
 				48924A2A15898E760085703E /* MainStoryboard_iPad.storyboard in Resources */,
+				1F0C49901874546200CB527E /* Default-Portrait@2x.png in Resources */,
 				48924A2F15898E760085703E /* first.png in Resources */,
 				48924A3115898E760085703E /* first@2x.png in Resources */,
 				48924A3615898E760085703E /* second.png in Resources */,
 				48924A3815898E760085703E /* second@2x.png in Resources */,
 				488C5DFD1601AEA40013EBFC /* Default@2x.png in Resources */,
+				1F0C498F1874546200CB527E /* Default-Landscape@2x.png in Resources */,
 				488C5E001601AFEE0013EBFC /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
