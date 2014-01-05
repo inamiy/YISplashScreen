@@ -94,9 +94,9 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
 {
     YISplashScreenAnimationBlock animationBlock = ^(CALayer* splashLayer, CALayer* rootLayer) {
         
-        CATransform3D perspective = CATransform3DMakePerspective(800.0);
+        CATransform3D perspective = CATransform3DMakePerspective((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 1600: 800);
         
-        CALayer* windowLayer = rootLayer.superlayer;
+        CALayer* superlayer = rootLayer.superlayer;
         CGFloat halfWidth = rootLayer.frame.size.width/2;
         
         // create transformLayer & move splash + root layers to transformLayer
@@ -104,7 +104,7 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
         transformLayer.frame = rootLayer.bounds;
         [transformLayer addSublayer:rootLayer];
         [transformLayer addSublayer:splashLayer];
-        [windowLayer addSublayer:transformLayer];
+        [superlayer addSublayer:transformLayer];
         
         // set rootLayer to right-hand-side
         [CATransaction begin];
@@ -123,7 +123,7 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
             rootLayer.transform = CATransform3DIdentity;
-            [windowLayer addSublayer:rootLayer];
+            [superlayer addSublayer:rootLayer];
             [transformLayer removeFromSuperlayer];
         }];
 
@@ -145,10 +145,6 @@ static inline CATransform3D CATransform3DMakePerspective(CGFloat z)
     };
     
     YISplashScreenAnimation* animation = [YISplashScreenAnimation animationWithBlock:animationBlock];
-    
-    // since above animationBlock brings splashLayer to mainWindow for 3D-transform,
-    // it is important to set shouldMove=YES to prevent from layer-flickering.
-    animation.shouldMoveSplashLayerToMainWindowBeforeAnimation = YES;
     
     return animation;
 }

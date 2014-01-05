@@ -34,11 +34,14 @@
 @interface YISplashScreen (RootDetaching)
 
 //
-// If you want CoreData migration, call this before '[YISplashScreen show]'
-// so that any CoreData logic inside rootViewController will not be called until splash image is hidden.
+// If you want database-migration before app start,
+// call '-detachRootViewController' before '[YISplashScreen show]'
+// so that rootViewController-logic (e.g. CoreData) will not be performed until '-hideWithAnimation:' is called
+// (which automatically calls '-attachRootViewController' back again).
 //
 // See also: YISplashScreen+Migration (simple UIAlertView helper)
 //
 + (void)detachRootViewController;
++ (void)attachRootViewController;
 
 @end

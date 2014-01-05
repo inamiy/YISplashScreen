@@ -13,6 +13,8 @@
 #import "YISplashScreenAnimation.h"
 
 #define SHOWS_MIGRATION_ALERT   1
+#define HIDE_ANIMATION_TYPE     3
+
 
 @implementation AppDelegate
 
@@ -24,67 +26,83 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // simple fade-out animation
+//    [YISplashScreen show];
+//    [YISplashScreen hide];
+    
+    // shows migration alert
+    [self _startMigrationDemo];
+    
+    return YES;
+}
+
+- (void)_startMigrationDemo
+{
+    void (^migrationBlock)(void);
     
 #if SHOWS_MIGRATION_ALERT
-    
-    [YISplashScreen showAndWaitForMigration:^{
-        
+    migrationBlock = ^{
         sleep(1);   // NOTE: add CoreData migration logic here
-        
-    } completion:^{
+    };
+#endif
+    
+    [YISplashScreen showAndWaitForMigration:migrationBlock completion:^{
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        
+#if HIDE_ANIMATION_TYPE == 1
         
         //--------------------------------------------------
         // fade out
         //--------------------------------------------------
-//        [YISplashScreen hide];    // fadeOutAnimation
-//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation fadeOutAnimation]]
+        //        [YISplashScreen hide];    // fadeOutAnimation
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation fadeOutAnimation]];
+        
+#elif HIDE_ANIMATION_TYPE == 2
         
         //--------------------------------------------------
         // page curl
         //--------------------------------------------------
-//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation pageCurlAnimation]];
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation pageCurlAnimation]];
+        
+#elif HIDE_ANIMATION_TYPE == 3
         
         //--------------------------------------------------
         // cube
         //--------------------------------------------------
         [YISplashScreen hideWithAnimation:[YISplashScreenAnimation cubeAnimation]];
         
+#elif HIDE_ANIMATION_TYPE == 4
+        
         //--------------------------------------------------
         // circle wipe
         //--------------------------------------------------
-//        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleOpeningAnimation]];
+        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleOpeningAnimation]];
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation circleClosingAnimation]];
         
         // WARNING: blurred-circle-wipe uses kCAGradientLayerRadial (private API)
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleOpeningAnimation]];
 //        [YISplashScreen hideWithAnimation:[YISplashScreenAnimation _blurredCircleClosingAnimation]];
         
+#else
+        
         //--------------------------------------------------
-        // manual
+        // manual implementation
         //--------------------------------------------------
-//        [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
-//            
-//            [CATransaction begin];
-//            [CATransaction setAnimationDuration:0.7];
-//            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-//            
-//            splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
-//            
-//            [CATransaction commit];
-//        }];
+        [YISplashScreen hideWithAnimationBlock:^(CALayer* splashLayer, CALayer* rootLayer) {
+            
+            [CATransaction begin];
+            [CATransaction setAnimationDuration:0.7];
+            [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+            
+            splashLayer.position = CGPointMake(splashLayer.position.x, splashLayer.position.y-splashLayer.bounds.size.height);
+            
+            [CATransaction commit];
+        }];
+        
+#endif
         
     }];
-    
-#else
-    
-    [YISplashScreen show];
-    [YISplashScreen hide];
-    
-#endif
-    
-    return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

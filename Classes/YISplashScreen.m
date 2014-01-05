@@ -8,8 +8,8 @@
 
 #import "YISplashScreen.h"
 
-#define IS_IPAD             (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-#define IS_PORTRAIT         UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
+#define IS_IPAD                 (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_PORTRAIT             UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
 #define IS_4_INCH               ([UIScreen mainScreen].bounds.size.height == 568.0)
 #define IS_IOS_AT_LEAST(ver)    ([[[UIDevice currentDevice] systemVersion] compare:ver] != NSOrderedAscending)
 
@@ -19,11 +19,10 @@
 #define IS_FLAT_DESIGN          NO
 #endif
 
-#define STATUS_BAR_HEIGHT       (IS_PORTRAIT ? [UIApplication sharedApplication].statusBarFrame.size.height : [UIApplication sharedApplication].statusBarFrame.size.width)
-
 static UIViewController* __originalRootViewController = nil;
 static UIWindow* __splashWindow = nil;
 static CALayer* __splashLayer = nil;
+static CALayer* __copiedRootLayer = nil;
 
 
 @implementation YISplashScreen
@@ -82,105 +81,41 @@ static CALayer* __splashLayer = nil;
     return splashImage;
 }
 
++ (BOOL)_hidesStatusBarDuringAppLaunch
+{
+    return [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIStatusBarHidden"] boolValue];
+}
+
 + (void)show
 {
     UIWindow* splashWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    splashWindow.backgroundColor = [UIColor clearColor];
+    splashWindow.backgroundColor = [UIColor blackColor];    // set black to not show mainWindow
     
-    UIViewController* rootVC = [[UIViewController alloc] init];
-    splashWindow.rootViewController = rootVC;
+    UIViewController* splashRootVC = [[UIViewController alloc] init];
+    splashRootVC.view.backgroundColor = [UIColor clearColor];
+    splashWindow.rootViewController = splashRootVC;
     
     CALayer* splashLayer = [CALayer layer];
-    [rootVC.view.layer addSublayer:splashLayer];
+    UIImage* splashImage = [self _preferredSplashImage];
+    splashLayer.contents = (id)splashImage.CGImage;
+    [splashRootVC.view.layer addSublayer:splashLayer];
     
     [splashWindow makeKeyAndVisible];
     
-    UIImage* splashImage = [self _preferredSplashImage];
-    splashLayer.contents = (id)splashImage.CGImage;
-    
-    // adjust frame after makeKeyAndVisible (rootVC.view is ready)
+    // adjust frame after makeKeyAndVisible (splashRootVC.view is ready)
     splashLayer.frame = CGRectMake(0,
-                                   rootVC.view.bounds.size.height-splashImage.size.height,  // mostly 0 or -20
+                                   splashRootVC.view.bounds.size.height-splashImage.size.height,  // mostly 0 or -20
                                    splashImage.size.width,
                                    splashImage.size.height);
     
-	if ([UIApplication sharedApplication].statusBarHidden == NO) {
-        
-        if (IS_FLAT_DESIGN) {
-            splashWindow.windowLevel = UIWindowLevelStatusBar-1;    // below statusBar
-        }
-        else {
-            splashWindow.windowLevel = UIWindowLevelStatusBar+1;    // above statusBar
-            
-            CGFloat statusBarHeight = STATUS_BAR_HEIGHT;
-            
-            BOOL shouldTrimForStatusBar = (splashLayer.frame.origin.y < 0);
-            
-            if (shouldTrimForStatusBar) {
-                
-                CAShapeLayer *mask = [[CAShapeLayer alloc] init];
-                mask.frame = splashLayer.bounds;
-                mask.fillColor = [[UIColor blackColor] CGColor];
-                
-                CGFloat x = 0;
-                CGFloat y = statusBarHeight;
-                CGFloat width = splashLayer.frame.size.width;
-                CGFloat height = splashLayer.frame.size.height - statusBarHeight;
-                
-                CGMutablePathRef path = CGPathCreateMutable();
-                
-                BOOL isIOS6 = IS_IOS_AT_LEAST(@"6.0") && !IS_IOS_AT_LEAST(@"7.0");
-                
-                // trim status-bar + iOS6 rounded corner
-                if (isIOS6) {
-                    
-                    CGFloat radius = 2.5f;
-                    
-                    CGRect innerRect = CGRectInset(CGRectMake(0, statusBarHeight, width, height), radius, radius);
-                    
-                    CGFloat inside_right = innerRect.origin.x + innerRect.size.width;
-                    CGFloat outside_right = x + width;
-                    CGFloat inside_bottom = innerRect.origin.y + innerRect.size.height;
-                    CGFloat outside_bottom = y + height;
-                    
-                    CGFloat inside_top = innerRect.origin.y;
-                    CGFloat outside_top = y;
-                    CGFloat outside_left = x;
-                    
-                    CGPathMoveToPoint(path, NULL, innerRect.origin.x, outside_top);
-                    
-                    CGPathAddLineToPoint(path, NULL, inside_right, outside_top);
-                    CGPathAddArcToPoint(path, NULL, outside_right, outside_top, outside_right, inside_top, radius);
-                    CGPathAddLineToPoint(path, NULL, outside_right, inside_bottom);
-                    CGPathAddArcToPoint(path, NULL,  outside_right, outside_bottom, inside_right, outside_bottom, radius);
-                    
-                    CGPathAddLineToPoint(path, NULL, innerRect.origin.x, outside_bottom);
-                    CGPathAddArcToPoint(path, NULL,  outside_left, outside_bottom, outside_left, inside_bottom, radius);
-                    CGPathAddLineToPoint(path, NULL, outside_left, inside_top);
-                    CGPathAddArcToPoint(path, NULL,  outside_left, outside_top, innerRect.origin.x, outside_top, radius);
-                    
-                    CGPathCloseSubpath(path);
-                    
-                }
-                // trim status-bar only
-                else {
-                    
-                    CGPathMoveToPoint(path, NULL, x, y);
-                    CGPathAddLineToPoint(path, nil, x + width, y);
-                    CGPathAddLineToPoint(path, nil, x + width, y + height);
-                    CGPathAddLineToPoint(path, nil, x, y + height);
-                    CGPathAddLineToPoint(path, nil, x, y);
-                    CGPathCloseSubpath(path);
-                    
-                }
-                
-                mask.path = path;
-                CGPathRelease(path);
-                
-                splashLayer.mask = mask;
-            }
-        }
-	}
+    if ([self _hidesStatusBarDuringAppLaunch]) {
+        // above statusBar (will be set to UIWindowLevelStatusBar-1 on hide)
+        splashWindow.windowLevel = UIWindowLevelStatusBar+1;
+    }
+    else {
+        // below statusBar
+        splashWindow.windowLevel = UIWindowLevelStatusBar-1;
+    }
     
     __splashWindow = splashWindow;
     __splashLayer = splashLayer;
@@ -198,13 +133,10 @@ static CALayer* __splashLayer = nil;
 
 + (void)hideWithAnimation:(YISplashScreenAnimation*)animation completion:(void (^)(void))completion
 {
-    BOOL shouldMove = animation.shouldMoveSplashLayerToMainWindowBeforeAnimation;
+    [self _prepareForAnimation];
     
-    [self _restoreRootViewControllerMovingSplashLayerToMainWindow:shouldMove];
-    
-    // perform hiding animation after rootViewController is ready
-    // (mainly to wait for status-bar change & splashLayer moving)
-    double delayInSeconds = 0.01;
+    // perform hiding animation after iOS7-fading animation finished
+    double delayInSeconds = IS_IOS_AT_LEAST(@"7.0") ? 0.5 : 0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self _performAnimationBlock:animation.animationBlock completion:completion];
@@ -228,42 +160,66 @@ static CALayer* __splashLayer = nil;
 
 #pragma mark Private
 
-+ (void)_restoreRootViewControllerMovingSplashLayerToMainWindow:(BOOL)moving
++ (void)_prepareForAnimation
 {
-    UIWindow* window = [UIApplication sharedApplication].delegate.window;
+    [self attachRootViewController];
     
-    // detach if needed, to adjust __originalRootViewController.view.frame to applicationFrame
-    // (NOTE: directly setting 'window.rootViewController.view.frame = [UIScreen mainScreen].applicationFrame' doesn't work)
-    [self detachRootViewController];
+    // temporarily switch mainWindow to create rootViewController.view
+    UIWindow* mainWindow = [UIApplication sharedApplication].delegate.window;
+    [mainWindow makeKeyAndVisible];
+    [__splashWindow makeKeyAndVisible];
     
-    // attach original again
-    window.rootViewController = __originalRootViewController;
+    // move below statusBar
+    __splashWindow.windowLevel = UIWindowLevelStatusBar-1;
     
-    [window makeKeyAndVisible];
+    UIView* mainRootView = mainWindow.rootViewController.view;
     
-    if (moving) {
-        [CATransaction begin];
-        [CATransaction setDisableActions:YES];
-        // reset splashLayer origin
-        __splashLayer.frame = CGRectMake(0, 0, __splashLayer.frame.size.width, __splashLayer.frame.size.height);
-        [window.layer addSublayer:__splashLayer];
-        [CATransaction commit];
+    // create rootView snapshot
+    UIGraphicsBeginImageContextWithOptions(mainRootView.bounds.size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    if ([mainRootView respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+        // tints tabBar-background in iOS7
+        [mainRootView drawViewHierarchyInRect:mainRootView.bounds afterScreenUpdates:YES];
+#endif
     }
+    else {
+        CALayer* rootLayer = mainRootView.layer;
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        // doesn't tint tabBar-background in iOS7
+        [rootLayer renderInContext:context];
+    }
+    UIImage* rootLayerImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
+    CALayer* copiedRootLayer = [CALayer layer];
+    copiedRootLayer.frame = [mainRootView convertRect:mainRootView.bounds toView:__splashWindow.rootViewController.view];
+    
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    copiedRootLayer.contents = (id)rootLayerImage.CGImage;
+    [__splashWindow.rootViewController.view.layer insertSublayer:copiedRootLayer atIndex:0];
+    [CATransaction commit];
+    
+    __copiedRootLayer = copiedRootLayer;
 }
 
 + (void)_performAnimationBlock:(YISplashScreenAnimationBlock)animationBlock completion:(void (^)(void))completion
 {
-    UIWindow* window = [UIApplication sharedApplication].delegate.window;
-    
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         
         // clean up
+        [__copiedRootLayer removeFromSuperlayer];
+        __copiedRootLayer = nil;
         [__splashLayer removeFromSuperlayer];
         __splashLayer = nil;
         __splashWindow = nil;
         __originalRootViewController = nil;
+        
+        UIWindow* mainWindow = [UIApplication sharedApplication].delegate.window;
+        [mainWindow makeKeyAndVisible];
         
         if (completion) {
             completion();
@@ -271,7 +227,7 @@ static CALayer* __splashLayer = nil;
     }];
     
     if (animationBlock) {
-        animationBlock(__splashLayer, window.rootViewController.view.layer);
+        animationBlock(__splashLayer, __copiedRootLayer);
     }
     
     [CATransaction commit];
@@ -289,13 +245,21 @@ static CALayer* __splashLayer = nil;
 {
     if (!__originalRootViewController) {
         
-        UIWindow* window = [UIApplication sharedApplication].delegate.window;
-        __originalRootViewController = window.rootViewController;
+        UIWindow* mainWindow = [UIApplication sharedApplication].delegate.window;
+        __originalRootViewController = mainWindow.rootViewController;
         
         // add dummy rootViewController to prevent console warning
         // "Applications are expected to have a root view controller at the end of application launch".
-        window.rootViewController = [[UIViewController alloc] init];
+        mainWindow.rootViewController = [[UIViewController alloc] init];
         
+    }
+}
+
++ (void)attachRootViewController
+{
+    if (__originalRootViewController) {
+        UIWindow* mainWindow = [UIApplication sharedApplication].delegate.window;
+        mainWindow.rootViewController = __originalRootViewController;
     }
 }
 
