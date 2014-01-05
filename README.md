@@ -1,20 +1,23 @@
-YISplashScreen 1.1.0
+YISplashScreen 1.2.0
 ====================
 
-Easy splash screen + animation maker for iOS5+.
+Easy splash screen + animation maker for iOS5+ (including iOS7).
 
 <img src="https://raw.github.com/inamiy/YISplashScreen/master/Screenshots/screenshot1.png" alt="ScreenShot1" width="225px" style="width:225px;" />
 
-- `YISplashScreen` creates another UIWindow on top of status-bar so that transition will be nicer, compared to adding splash image directly on `rootViewController.view`.
+- `YISplashScreen` creates another UIWindow on top of status-bar so that transition will be nicer, compared to adding splash image directly on `mainWindow.rootViewController.view`.
 - `animationBlock` is used to hide splash image with two arguments:
-  - `splashLayer`: splash image layer (superlayer = another window, by default)
-  - `rootLayer`: equivalent to `rootViewController.view.layer` (superlayer = main window)
+  - `splashLayer`: splash image layer
+  - `rootLayer`: copy of `mainWindow.rootViewController.view.layer`
 
-Normally, animating `splashLayer` and `rootLayer` individually on separate UIWindows is sufficient, 
-but if you want to put them in one main window during animation, 
-prepare it by setting `shouldMoveSplashLayerToMainWindowBeforeAnimation = YES` 
-so that `splashLayer.superlayer` will be main window (below status-bar) instead,
-and more importantly, it prevents from layer-flickering.
+### View hierarchy before animation
+
+- mainWindow (not visible)
+    - mainWindow.rootViewController.view
+- splashWindow
+    - splashWindow.rootViewController.view (rotateable)
+        - rootLayer (copy of mainWindow.rootViewController.view)
+        - splashLayer (splash image layer)
 
 Install via [CocoaPods](http://cocoapods.org/)
 ----------
