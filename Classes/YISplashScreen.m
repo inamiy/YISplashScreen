@@ -25,6 +25,32 @@ static CALayer* __splashLayer = nil;
 static CALayer* __copiedRootLayer = nil;
 
 
+@interface _YISplashScreenViewController : UIViewController
+
+@property (nonatomic) BOOL rotationEnabled;
+
+@end
+
+
+@implementation _YISplashScreenViewController
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _rotationEnabled = YES;
+    }
+    return self;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return _rotationEnabled;
+}
+
+@end
+
+
 @implementation YISplashScreen
 
 + (UIImage*)_preferredSplashImage
@@ -91,7 +117,7 @@ static CALayer* __copiedRootLayer = nil;
     UIWindow* splashWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     splashWindow.backgroundColor = [UIColor blackColor];    // set black to not show mainWindow
     
-    UIViewController* splashRootVC = [[UIViewController alloc] init];
+    _YISplashScreenViewController* splashRootVC = [[_YISplashScreenViewController alloc] init];
     splashRootVC.view.backgroundColor = [UIColor clearColor];
     splashWindow.rootViewController = splashRootVC;
     
@@ -119,6 +145,9 @@ static CALayer* __copiedRootLayer = nil;
     
     __splashWindow = splashWindow;
     __splashLayer = splashLayer;
+    
+    // lock rotation while showing
+    splashRootVC.rotationEnabled = NO;
 }
 
 + (void)hide
