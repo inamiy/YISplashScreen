@@ -205,7 +205,6 @@ static CALayer* __copiedRootLayer = nil;
     
     // create rootView snapshot
     UIGraphicsBeginImageContextWithOptions(mainRootView.bounds.size, NO, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
     
     if ([mainRootView respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
 #if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
