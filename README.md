@@ -1,4 +1,4 @@
-YISplashScreen 1.2.0
+YISplashScreen 1.2.1
 ====================
 
 Easy splash screen + animation maker for iOS5+ (including iOS7).
